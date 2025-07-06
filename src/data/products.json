@@ -1,0 +1,81 @@
+[
+  {
+    "id": "mcs4b319hydhgrd084",
+    "status": true,
+    "thumbnails": [],
+    "title": "Zapatillas Deportivas",
+    "description": "Zapatillas cómodas para correr",
+    "code": "ZAPAT001",
+    "price": 82500,
+    "stock": 30,
+    "category": "Calzado"
+  },
+  {
+    "id": "mcs4ilqgc0asypu9wtb",
+    "status": true,
+    "thumbnails": [],
+    "title": "Auriculares Inalámbricos Bluetooth",
+    "description": "Auriculares con cancelación de ruido, sonido HD",
+    "code": "AUDI002",
+    "price": 120000,
+    "stock": 75,
+    "category": "Audio"
+  },
+  {
+    "id": "mcs4jama151xuua9mel",
+    "status": true,
+    "thumbnails": [
+      "url_teclado_1.jpg"
+    ],
+    "title": "Teclado Mecánico Gaming RGB",
+    "description": "Teclado retroiluminado, switches Cherry MX Blue",
+    "code": "TECLADO003",
+    "price": 95000,
+    "stock": 40,
+    "category": "Gaming"
+  },
+  {
+    "id": "mcs4jtuyse7tpxfl89g",
+    "status": true,
+    "thumbnails": [],
+    "title": "Mouse Óptico Ergonómico",
+    "description": "Diseño ergonómico para largas horas de uso, alta precisión",
+    "code": "MOUSE004",
+    "price": 35000,
+    "stock": 120,
+    "category": "Periféricos"
+  },
+  {
+    "id": "mcs4k4yhkxh71nvl89l",
+    "status": true,
+    "thumbnails": [],
+    "title": "Cámara Web Full HD 1080p",
+    "description": "Ideal para videollamadas y streaming, micrófono incorporado",
+    "code": "CAMWEB005",
+    "price": 66000,
+    "stock": 60,
+    "category": "Video Conferencia"
+  },
+  {
+    "id": "mcs4kfr1aswtwbd2h0g",
+    "status": true,
+    "thumbnails": [],
+    "title": "Smartwatch Deportivo con GPS",
+    "description": "Monitor de ritmo cardíaco, contador de pasos, notificaciones",
+    "code": "SMARTW006",
+    "price": 85000,
+    "stock": 25,
+    "category": "Wearables"
+  },
+  {
+    "id": "mcs4ks1lsicp2a9o15",
+    "status": true,
+    "thumbnails": [],
+    "title": "Disco Duro Externo USB 3.0 1TB",
+    "description": "Almacenamiento portátil de alta velocidad",
+    "code": "HDDEXT007",
+    "price": 75000,
+    "stock": 90,
+    "category": "Almacenamiento"
+  }
+]
