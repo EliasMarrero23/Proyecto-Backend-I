@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Listado de Productos - Home</title>
+    </head>
+<body>
+    <h1>Productos Disponibles</h1>
+
+    <div id="product-list-home">
+        {{#if products}}
+            <ul>
+                {{#each products}}
+                <li>
+                    <strong>{{this.title}}</strong> ({{this.category}}) - ${{this.price}}
+                    <br>
+                    Código: {{this.code}}, Stock: {{this.stock}}
+                    </li>
+                {{/each}}
+            </ul>
+        {{else}}
+            <p>No hay productos para mostrar en este momento.</p>
+        {{/if}}
+    </div>
+
+    <p><a href="/realtimeproducts">Ir a la vista de Productos en Tiempo Real</a></p>
+</body>
+</html>
