@@ -1,3 +1,8 @@
+// conexión con mongo
+
+const connectDB = require('./src/config/db.config');
+connectDB();
+
 // app conecta todos los archivos entre sí
 
 const express = require('express');
