@@ -4,35 +4,37 @@ const { engine } = require('express-handlebars');
 const http = require('http');
 const { Server } = require('socket.io');
 
-const connectDB = require('./src/config/db.config');
-connectDB(); // Conexión a la base de datos
+// conexión a la base de datos mongo
 
-// --- IMPORTACIONES DE MODELOS DE MONGOOSE ---
+const connectDB = require('./src/config/db.config');
+connectDB(); 
+
+// modelos mongoose
 const productModel = require('./src/models/product.model');
 
-// --- IMPORTACIÓN DE ROUTERS ---
+// routers
 const productsRouter = require('./src/routes/products.router');
 const cartsRouter = require('./src/routes/carts.router');
 
 const app = express();
 const PORT = 8080;
 
-// --- CONFIGURACIÓN DE SOCKET.IO ---
+// socket.io
 const server = http.createServer(app);
 const io = new Server(server);
 
-// --- CONFIGURACIÓN DE HANDLEBARS ---
+// config de handlebars
 app.engine('handlebars', engine());
 app.set('view engine', 'handlebars');
 app.set('views', './src/views');
 
-// --- MIDDLEWARES ---
+// middlewares
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-// --- RUTAS PARA LAS VISTAS ---
-// Renderiza la vista 'home' con productos de MongoDB
+// routes para las vistas
+// renderiza home con los prod de mongo
 app.get('/', async (req, res) => {
     try {
         const products = await productModel.find().lean();
@@ -43,7 +45,7 @@ app.get('/', async (req, res) => {
     }
 });
 
-// Renderiza la vista 'realTimeProducts' con productos de MongoDB
+// renderiza 'realTimeProducts' con productos de mongo
 app.get('/realtimeproducts', async (req, res) => {
     try {
         const products = await productModel.find().lean();
@@ -54,25 +56,25 @@ app.get('/realtimeproducts', async (req, res) => {
     }
 });
 
-// --- CONEXIÓN DE ROUTERS DE LA API ---
+// conexión de rouuters
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
 
-// --- LÓGICA DE SOCKET.IO (ADAPTADA PARA MONGOOSE) ---
+// lógica del socket.io para mongo
 io.on('connection', async (socket) => {
     console.log('Nuevo cliente conectado! ID:', socket.id);
 
-    // Enviar lista inicial de productos desde MongoDB
+    // envia la lista inicial
     const products = await productModel.find().lean();
     socket.emit('updateProducts', products);
 
-    // Escuchar cuando se pida la lista de productos
+    // listening de cuuando se pidan los productos
     socket.on('requestProducts', async () => {
         const products = await productModel.find().lean();
         socket.emit('updateProducts', products);
     });
 
-    // Escuchar evento 'newProduct' para crear en MongoDB
+    // escucha evento "newProduct"
     socket.on('newProduct', async (productData) => {
         try {
             await productModel.create(productData);
@@ -84,7 +86,7 @@ io.on('connection', async (socket) => {
         }
     });
 
-    // Escuchar evento 'deleteProduct' para eliminar de MongoDB
+    // escucha evento "deleteProduct"
     socket.on('deleteProduct', async (productId) => {
         try {
             await productModel.findByIdAndDelete(productId);
@@ -101,7 +103,7 @@ io.on('connection', async (socket) => {
     });
 });
 
-// --- INICIAR EL SERVIDOR ---
+// INICIA EL SERVIDORRRR
 server.listen(PORT, () => {
     console.log(`Servidor escuchando en http://localhost:${PORT}`);
 });
