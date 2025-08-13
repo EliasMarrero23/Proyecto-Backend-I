@@ -1,103 +1,127 @@
-# PROYECTO BACKEND 1: API de Gestión de Productos y Carritos con WebSockets
+** PROYECTO BACKEND FINAL: API de e-commerce **
 
-Este proyecto es una API RESTful desarrollada con Node.js y Express, diseñada para gestionar productos y carritos de compra. Además, incorpora WebSockets para ofrecer una experiencia en tiempo real al usuario en la gestión de productos.
+# Este proyecto es una API RESTful desarrollada con Node.js, Express y MongoDB, diseñada para gestionar productos y carritos de compra. Utiliza Handlebars para la renderización de vistas y WebSockets para ofrecer una experiencia en tiempo real al usuario.
 
-## Características Principales
+# Características Principales
+API RESTful para Productos y Carritos: Endpoints para gestionar productos y carritos de compra, incluyendo la paginación en la API de productos.
 
-* **API RESTful para Productos:** Permite realizar operaciones CRUD (Crear, Leer, Actualizar, Eliminar) sobre productos.
-* **API RESTful para Carritos:** Permite crear carritos, listar sus productos y agregar productos a ellos, manejando cantidades.
-* **Persistencia de Datos:** La información de productos y carritos se almacena en archivos `products.json` y `carts.json` respectivamente, utilizando Managers personalizados.
-* **Vistas con Handlebars:** Incluye dos vistas básicas para la interacción con el usuario:
-    * `home.handlebars`: Muestra una lista estática de todos los productos.
-    * `realTimeProducts.handlebars`: Muestra la lista de productos y permite agregar/eliminar productos en tiempo real mediante WebSockets.
-* **Comunicación en Tiempo Real con WebSockets (Socket.IO):** Los cambios realizados en la vista `realTimeProducts` (agregar o eliminar productos) se reflejan instantáneamente en todos los clientes conectados, sin necesidad de recargar la página.
+Base de datos MongoDB: La persistencia de datos ahora se gestiona con MongoDB y Mongoose. Esto mejora la escalabilidad y la gestión de datos, reemplazando el uso de archivos JSON.
 
-## Tecnologías Utilizadas
+Manejo de errores: El código está diseñado para ser resiliente. Si, por ejemplo, los archivos JSON de respaldo no existen o su formato es incorrecto, el servidor manejará la situación sin colapsar. Esta validación se realiza a través de bloques try-catch dentro del ProductManager y CartManager, asegurando que la aplicación se sostenga ante condiciones de inicio inesperadas.
 
-* Node.js
-* Express.js
-* Express-Handlebars
-* Socket.IO
-* Gestión de archivos (`fs.promises`)
+# Vistas con Handlebars:
 
-## Estructura del Proyecto
+* home.handlebars: Muestra una lista de todos los productos con paginación, consumiendo la API.
+
+* realTimeProducts.handlebars: Muestra la lista de productos y permite agregar/eliminar productos en tiempo real mediante WebSockets.
+
+* cart.handlebars: Muestra los productos dentro de un carrito específico.
+
+Comunicación en Tiempo Real con WebSockets (Socket.IO): Los cambios realizados en la vista realTimeProducts se reflejan instantáneamente en todos los clientes conectados, sin necesidad de recargar la página.
+
+# Tecnologías utilizadas:
+
+- Node.js
+
+- Express.js
+
+- Express-Handlebars
+
+- Socket.IO
+
+- MongoDB
+
+- Mongoose
+
+- fs.promises
+
+# Estructura del Proyecto
 
 PROYECTOBACKEND1/
-├── data/
-│   ├── carts.json          # Almacena los datos de los carritos.
-│   └── products.json       # Almacena los datos de los productos.
-├── managers/
-│   ├── CartManager.js      # Clase para la gestión de carritos.
-│   └── ProductManager.js   # Clase para la gestión de productos.
-├── public/
-│   └── js/
-│       └── realTimeProducts.js # Lógica JavaScript del cliente para WebSockets.
-├── routes/
-│   ├── carts.router.js     # Rutas para la API de carritos.
-│   └── products.router.js  # Rutas para la API de productos.
 ├── src/
+│   ├── config/
+│   │   └── db.config.js          # Configuración para la conexión a MongoDB.
+│   ├── data/
+│   │   ├── carts.json
+│   │   └── products.json
+│   ├── managers/
+│   │   ├── CartManager.js        # Lógica con archivos JSON (Manejo de errores mejorado).
+│   │   └── ProductManager.js     # Lógica con archivos JSON (Manejo de errores mejorado).
+│   ├── models/
+│   │   ├── cart.model.js         # Modelo de Mongoose para carritos.
+│   │   └── product.model.js      # Modelo de Mongoose para productos.
+│   ├── public/
+│   │   └── js/
+│   │       └── realTimeProducts.js   # Lógica JS del cliente para WebSockets.
+│   ├── routes/
+│   │   ├── carts.router.js       # Rutas API para carritos (con populate).
+│   │   ├── products.router.js    # Rutas API para productos (con paginación).
+│   │   └── views.router.js       # Rutas para renderizar las vistas de Handlebars.
 │   └── views/
 │       ├── layouts/
-│       │   └── main.handlebars # Layout principal de Handlebars.
-│       ├── home.handlebars     # Vista para la lista estática de productos.
-│       └── realTimeProducts.handlebars # Vista para productos en tiempo real con WebSockets.
-├── .gitignore              # Archivo para ignorar 'node_modules' en Git.
-├── app.js                  # Archivo principal del servidor y configuración.
-├── package-lock.json       # Bloquea las versiones de las dependencias.
-└── package.json            # Define el proyecto y sus dependencias.
+│       │   └── main.handlebars
+│       ├── cart.handlebars       # Vista para mostrar los productos de un carrito.
+│       ├── home.handlebars       # Vista para productos con paginación.
+│       └── realTimeProducts.handlebars
+├── .gitignore
+├── app.js                      # Servidor principal y configuración.
+├── package-lock.json
+└── package.json
 
-## Instalación y Ejecución
 
-Sigue estos pasos para poner en marcha el proyecto en tu máquina local:
+# Instalación y Ejecución
 
-1.  **Clona el repositorio:**
-    ```bash
-    git clone <URL_DE_TU_REPOSITORIO_GITHUB>
-    cd PROYECTO-BACKEND-I # O el nombre de tu carpeta principal
-    ```
+Clonar el repositorio:
 
-2.  **Instala las dependencias:**
-    ```bash
-    npm install
-    ```
+Bash
 
-3.  **Inicia el servidor:**
-    ```bash
-    node app.js
-    ```
-    El servidor se iniciará y estará escuchando en `http://localhost:8080`.
+git clone https://downgit.github.io/
+cd PROYECTOBACKEND1
 
-## Endpoints de la API
+# Instalar dependencias:
 
-Una vez que el servidor esté corriendo, puedes interactuar con la API usando herramientas como Postman.
+Bash
 
-### Productos (`/api/products`)
+npm install
 
-* `GET /api/products`: Obtiene todos los productos.
-* `GET /api/products/:pid`: Obtiene un producto específico por su ID.
-* `POST /api/products`: Crea un nuevo producto. (Ejemplo de Body JSON: `{"title": "Nuevo Producto", "description": "...", "code": "...", "price": 100, "stock": 10, "category": "..."}`)
-* `PUT /api/products/:pid`: Actualiza un producto existente por su ID. (Ejemplo de Body JSON: `{"price": 120, "stock": 15}`)
-* `DELETE /api/products/:pid`: Elimina un producto por su ID.
+# Configurar MongoDB:
 
-### Carritos (`/api/carts`)
+Asegúrate de tener un servidor de MongoDB en ejecución.
 
-* `POST /api/carts`: Crea un nuevo carrito vacío.
-* `GET /api/carts/:cid`: Obtiene los productos dentro de un carrito específico por su ID.
-* `POST /api/carts/:cid/product/:pid`: Agrega un producto a un carrito específico. Si el producto ya existe en el carrito, incrementa su cantidad.
+Configura la cadena de conexión en src/config/db.config.js.
 
-## Vistas Web
+# Iniciar el servidor:
 
-Puedes acceder a las vistas directamente desde tu navegador:
+Bash
 
-* **Página Principal de Productos (Estática):** `http://localhost:8080/`
-    * Muestra una lista de todos los productos cargados.
+node app.js
+El servidor se ejecutará en http://localhost:8080.
 
-* **Página de Productos en Tiempo Real (WebSockets):** `http://localhost:8080/realtimeproducts`
-    * Muestra la misma lista de productos.
-    * Incluye formularios para **agregar** y **eliminar** productos.
-    * Todos los cambios (creaciones y eliminaciones) se sincronizan automáticamente en tiempo real entre todos los navegadores abiertos en esta vista.
+# Endpoints de la API
+* Productos:
 
-## Consideraciones Adicionales
+- GET /api/products: Obtiene todos los productos con paginación.
 
-* Asegúrate de que tu archivo `products.json` tenga una estructura de array vacía (`[]`) o con objetos de producto válidos al iniciar el servidor para evitar errores de lectura.
-* La comunicación de agregar/eliminar productos desde la vista `realTimeProducts` se realiza directamente a través de WebSockets, como sugiere la consigna, para demostrar la funcionalidad en tiempo real.
+- GET /api/products/:pid: Obtiene un producto específico por su ID.
+
+- POST /api/products: Agrega un nuevo producto.
+
+- PUT /api/products/:pid: Actualiza un producto.
+
+- DELETE /api/products/:pid: Elimina un producto.
+
+* Carritos:
+
+- POST /api/carts: Crea un nuevo carrito.
+
+- GET /api/carts/:cid: Obtiene un carrito específico, con los datos de sus productos "poblados".
+
+- POST /api/carts/:cid/product/:pid: Agrega un producto a un carrito.
+
+# Vistas Web
+
+- Página Principal de Productos: http://localhost:8080/
+
+- Productos en Tiempo Real: http://localhost:8080/realtimeproducts
+
+- Vista de Carrito: http://localhost:8080/carts/:cid (reemplaza :cid con el ID de un carrito)

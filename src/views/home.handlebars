@@ -1,9 +1,9 @@
-<h1>Productos Disponibles</h1>
+<h1>Productos disponibles</h1>
 
 <div id="product-list-home">
-    {{#if products}}
+    {{#if payload.docs}}
         <ul>
-            {{#each products}}
+            {{#each payload.docs}}
             <li>
                 <strong>{{this.title}}</strong> ({{this.category}}) - ${{this.price}}
                 <br>
@@ -13,5 +13,18 @@
         </ul>
     {{else}}
         <p>No hay productos para mostrar en este momento.</p>
+    {{/if}}
+</div>
+
+{{!-- Paginaciónnn --}}
+<div class="pagination">
+    {{#if hasPrevPage}}
+        <a href="{{prevLink}}">Anterior</a>
+    {{/if}}
+    
+    <span>Página {{page}} de {{totalPages}}</span>
+
+    {{#if hasNextPage}}
+        <a href="{{nextLink}}">Siguiente</a>
     {{/if}}
 </div>

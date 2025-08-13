@@ -1,4 +1,3 @@
-// public/js/realTimeProducts.js
 
 const socket = io(); // conecta al cliente con el servidor socket
 
@@ -16,7 +15,7 @@ function renderProducts(products) {
         products.forEach(product => {
             html += `
                 <li>
-                    <strong>${product.title}</strong> (ID: ${product.id}) - $${product.price}
+                    <strong>${product.title}</strong> (ID: ${product._id}) - $${product.price}
                     <br>
                     Descripción: ${product.description}<br>
                     Código: ${product.code}, Stock: ${product.stock}, Categoría: ${product.category}

@@ -7,7 +7,7 @@ class ProductManager {
         this.loadProducts(); // esta linea carga productos al inicializar
     }
 
-    async loadProducts() {
+    async loadProducts() { // acá hay un try-catch para parsear los posibles errores
         try {
             const data = await fs.readFile(this.path, 'utf8');
             this.products = JSON.parse(data);

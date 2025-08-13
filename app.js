@@ -15,6 +15,7 @@ const productModel = require('./src/models/product.model');
 // routers
 const productsRouter = require('./src/routes/products.router');
 const cartsRouter = require('./src/routes/carts.router');
+const viewsRouter = require('./src/routes/views.router');
 
 const app = express();
 const PORT = 8080;
@@ -33,32 +34,12 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
 
-// routes para las vistas
-// renderiza home con los prod de mongo
-app.get('/', async (req, res) => {
-    try {
-        const products = await productModel.find().lean();
-        res.render('home', { products: products });
-    } catch (error) {
-        console.error('Error al renderizar home:', error);
-        res.status(500).send('Error al cargar la página de inicio.');
-    }
-});
+// acá existían las routes que ahora van a estar manejadas por views.router.js
 
-// renderiza 'realTimeProducts' con productos de mongo
-app.get('/realtimeproducts', async (req, res) => {
-    try {
-        const products = await productModel.find().lean();
-        res.render('realTimeProducts', { products: products });
-    } catch (error) {
-        console.error('Error al renderizar realTimeProducts:', error);
-        res.status(500).send('Error al cargar la vista de productos en tiempo real.');
-    }
-});
-
-// conexión de rouuters
+// conexión de routers
 app.use('/api/products', productsRouter);
 app.use('/api/carts', cartsRouter);
+app.use('/', viewsRouter);
 
 // lógica del socket.io para mongo
 io.on('connection', async (socket) => {
